@@ -67,12 +67,24 @@ GitHub kamu (lewat browser/token) saat `git push`.
 **Opsi A — lewat dashboard Vercel (disarankan):**
 1. Login ke [vercel.com](https://vercel.com) dan klik **Add New → Project**.
 2. Pilih **Import Git Repository**, lalu pilih `weekdayscoffee/landing-page`.
-3. Vercel otomatis mendeteksi framework **Vite** — biarkan pengaturan default:
-   - Build Command: `vite build` (atau `npm run build`)
-   - Output Directory: `dist`
+3. File `vercel.json` di repo ini sudah mengunci konfigurasi build secara
+   eksplisit (`npm install` → `npm run build` → output `dist`), jadi biasanya
+   tidak perlu diubah apa-apa.
 4. Klik **Deploy**. Setelah selesai, Vercel akan memberi URL live (mis.
    `landing-page-xxxx.vercel.app`), dan bisa dihubungkan ke domain
    `weekdayscoffee.id` lewat menu **Domains** di project settings.
+
+**Jika masih muncul error `vite: command not found`:**
+Itu berarti ada *override* manual di dashboard yang menimpa `vercel.json`.
+Buka **Project Settings → Build & Development Settings**, cek toggle
+**Override** di baris Build Command dan Install Command:
+- Jika toggle menyala dan isinya `vite build` mentah → matikan togglenya
+  (biar `vercel.json` yang berlaku), atau ganti isinya jadi `npm run build`.
+- Install Command pastikan `npm install` (bukan kosong).
+- Root Directory pastikan kosong/`.` (bukan menunjuk ke subfolder lain),
+  supaya Vercel membaca `package.json` di root repo ini.
+
+Setelah itu, redeploy dari tab **Deployments → ⋯ → Redeploy**.
 
 **Opsi B — lewat Vercel CLI:**
 ```bash
