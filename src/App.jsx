@@ -581,8 +581,8 @@ function About() {
     { year: "2019", txt: "Weekdays lahir dari satu gagasan sederhana: menemani jeda kerja dengan kopi yang tepat." },
     { year: "2021", txt: "Outlet pertama resmi hadir di Menara Bidakara, Jakarta Selatan." },
     { year: "2023", txt: "Menu makanan diperluas. Good coffee bertemu good food untuk teman kantor." },
-    { year: "2024", txt: "Weekdays hadir di Husein Sastranegara Airport, Bandung." },
     { year: "2025", txt: "Komunitas Weekdays tumbuh melewati 16 ribu teman setia." },
+    { year: "2026", txt: "Weekdays hadir di Husein Sastranegara Airport, Bandung." },
   ];
   return (
     <>
@@ -765,6 +765,7 @@ function Outlet() {
     },
   ];
   const gallery = [
+    IMG.heroMadeTogether,
     IMG.outletCoworking,
     IMG.outletWorkday,
     IMG.outletSteakPatio,
@@ -772,6 +773,7 @@ function Outlet() {
     IMG.outletMatchaTools,
     IMG.outletMatchaWhisk,
     IMG.outletTableShare,
+    IMG.storyGreenWall,
   ];
   return (
     <>
@@ -842,7 +844,7 @@ function Outlet() {
         </div>
       </section>
 
-      {/* Gallery mosaic */}
+      {/* Gallery — 9 photos, uniform grid */}
       <section style={{ maxWidth: 1180, margin: "0 auto", padding: "34px 24px 70px" }}>
         <div
           className="wd-gallery"
@@ -852,10 +854,10 @@ function Outlet() {
             <Img
               key={i}
               src={g}
-              alt={`Interior Weekdays ${i + 1}`}
+              alt={`Suasana outlet Weekdays ${i + 1}`}
               style={{
                 width: "100%",
-                height: i % 5 === 0 ? 300 : 220,
+                aspectRatio: "1 / 1",
                 borderRadius: 12,
                 display: "block",
               }}
@@ -955,11 +957,14 @@ function Event() {
                 {p.name}
               </h3>
               <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, color: C.muted }}>
+                  Kapasitas
+                </span>
                 <span style={{ fontFamily: "'Fraunces', serif", fontSize: 40, fontWeight: 600, color: C.roast }}>
                   {p.price}
                 </span>
                 <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, color: C.muted }}>
-                  {p.unit}, hingga
+                  {p.unit}
                 </span>
               </div>
               <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, lineHeight: 1.55, color: C.muted, margin: 0 }}>
