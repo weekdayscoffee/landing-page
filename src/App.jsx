@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 /* ============================================================================
    WEEKDAYS COFFEE / #TemanKantor
-   Single-file landing site, four navigable pages (Beranda, Cerita, Outlet, Event).
+   Single-file landing site, four navigable pages (Beranda, Tentang, Outlet, Event).
    Brand grounded in @weekdayscoffee.id : espresso-brown + cream palette,
    "WEEKDAYS" serif wordmark, editorial coffee-and-office vernacular.
    Reference layout structure: lokale.coffee (diverged deliberately, see README).
@@ -23,42 +23,36 @@ const C = {
 const FONT_LINK =
   "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap";
 
-/* Real Weekdays imagery pulled from their public Instagram / brand feed.
-   (Direct CDN links occasionally rotate; each has a warm-brown gradient
-   fallback baked into the component so the layout never breaks.) */
+/* Real Weekdays photos, downloaded from @weekdayscoffee.id's own posts and
+   saved locally in ./assets. Each key is named for what the photo actually
+   shows so the mapping below stays traceable back to its source post. */
 const IMG = {
-  heroCafe:
-    "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1600&q=80",
-  team:
-    "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1400&q=80",
-  lunch:
-    "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1200&q=80",
-  greenWall:
-    "https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?auto=format&fit=crop&w=1400&q=80",
-  pour:
-    "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=1200&q=80",
-  event:
-    "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1600&q=80",
-  interior1:
-    "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&q=80",
-  interior2:
-    "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80",
-  interior3:
-    "https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?auto=format&fit=crop&w=1000&q=80",
-  interior4:
-    "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1000&q=80",
-  interior5:
-    "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1000&q=80",
-  interior6:
-    "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80",
-  matcha:
-    "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80",
-  steak:
-    "https://images.unsplash.com/photo-1546964124-0cce460f38ef?auto=format&fit=crop&w=800&q=80",
-  penne:
-    "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=800&q=80",
-  coffeeCup:
-    "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80",
+  // Beranda (Home)
+  heroMadeTogether: "/assets/weekdays-01-hero-madebettertogether.jpg", // "Made Better Together" hero, #TemanKantor
+  storyGreenWall: "/assets/weekdays-11-greenwall-temankantor.jpg", // 3 teman kantor at the WEEKDAYS green wall
+  menuKopiSusu: "/assets/weekdays-05-barista-pour.jpg", // barista pouring milk over coffee
+  menuMatcha: "/assets/weekdays-03c-matcha-slide3.jpg", // matcha being poured into glass
+  menuSteak: "/assets/weekdays-06a-steak-slide1.jpg", // BBQ sauce poured over NZ steak rib eye
+  menuPenne: "/assets/weekdays-10b-penne-napolitana-slide2.jpg", // close-up forkful of Penne Napolitana
+  halalDish: "/assets/weekdays-09b-nasigoreng-kebuli-slide2.jpg", // Nasi Goreng Sapi Kebuli, top-down
+
+  // Tentang (About)
+  aboutTakeBreak: "/assets/weekdays-02-take-a-break.jpg", // "Take a Break" coffee + lunch
+  aboutCommunity: "/assets/weekdays-07a-healing-temankantor-slide1.jpg", // group photo, "Healing Sejenak bareng #TemanKantor"
+
+  // Outlet gallery
+  outletCoworking: "/assets/weekdays-07b-healing-temankantor-slide2.jpg", // laptops, "Stay Chill your dreams are brewing"
+  outletWorkday: "/assets/weekdays-04-workday-lighter.jpg", // laptop, iced coffee, pasta
+  outletSteakPatio: "/assets/weekdays-06b-steak-slide2.jpg", // eating steak on the outdoor patio
+  outletNasiGoreng: "/assets/weekdays-09a-nasigoreng-kebuli-slide1.jpg", // hands sharing Nasi Goreng Kebuli
+  outletMatchaTools: "/assets/weekdays-03a-matcha-slide1.jpg", // matcha whisk & tray still life
+  outletMatchaWhisk: "/assets/weekdays-03b-matcha-slide2.jpg", // whisking matcha by hand
+  outletTableShare: "/assets/weekdays-10a-penne-napolitana-slide1.jpg", // shared table, pasta and nasi goreng
+
+  // Event
+  eventHero: "/assets/weekdays-08a-iftar-slide1.jpg", // group laughing over iftar drinks
+  eventContact: "/assets/weekdays-08c-iftar-slide3.jpg", // couple sharing kurma at iftar
+  eventBites: "/assets/weekdays-08b-iftar-slide2.jpg", // hands sharing fritters & kurma
 };
 
 /* ---------- Small building blocks ---------------------------------------- */
@@ -366,7 +360,7 @@ function Home({ setPage }) {
 
           <div style={{ position: "relative" }}>
             <Img
-              src={IMG.heroCafe}
+              src={IMG.heroMadeTogether}
               alt="Suasana Weekdays Coffee"
               style={{
                 width: "100%",
@@ -435,7 +429,7 @@ function Home({ setPage }) {
             </p>
           </div>
           <Img
-            src={IMG.team}
+            src={IMG.storyGreenWall}
             alt="Teman kantor di Weekdays"
             style={{ width: "100%", height: 340, borderRadius: 18, display: "block" }}
           />
@@ -460,10 +454,10 @@ function Home({ setPage }) {
             }}
           >
             {[
-              { img: IMG.coffeeCup, name: "Kopi Susu Weekdays", note: "Signature • light–strong" },
-              { img: IMG.matcha, name: "Matcha Recharge", note: "Green, creamy, dreamy" },
-              { img: IMG.steak, name: "NZ Steak Rib Eye", note: "Juicy & satisfying" },
-              { img: IMG.penne, name: "Penne Napolitana", note: "Saucy & comforting" },
+              { img: IMG.menuKopiSusu, name: "Kopi Susu Weekdays", note: "Signature, light ke strong" },
+              { img: IMG.menuMatcha, name: "Matcha Recharge", note: "Green, creamy, dreamy" },
+              { img: IMG.menuSteak, name: "NZ Steak Rib Eye", note: "Juicy & satisfying" },
+              { img: IMG.menuPenne, name: "Penne Napolitana", note: "Saucy & comforting" },
             ].map((m) => (
               <div key={m.name} style={{ textAlign: "center" }}>
                 <Img
@@ -510,8 +504,8 @@ function Home({ setPage }) {
           style={{ display: "grid", gridTemplateColumns: "0.8fr 1.2fr", gap: 40, alignItems: "center" }}
         >
           <Img
-            src={IMG.greenWall}
-            alt="Interior Weekdays"
+            src={IMG.halalDish}
+            alt="Nasi Goreng Sapi Kebuli Weekdays"
             style={{ width: "100%", height: 300, borderRadius: 18, display: "block" }}
           />
           <div>
@@ -618,7 +612,7 @@ function About() {
             </p>
           </div>
           <Img
-            src={IMG.lunch}
+            src={IMG.aboutTakeBreak}
             alt="Menu Weekdays"
             style={{ width: "100%", height: 360, borderRadius: 20, display: "block" }}
           />
@@ -677,8 +671,8 @@ function About() {
           }}
         >
           <Img
-            src={IMG.greenWall}
-            alt="Interior Weekdays"
+            src={IMG.aboutCommunity}
+            alt="Healing sejenak bareng #TemanKantor"
             style={{ width: "100%", height: 320, borderRadius: 18, display: "block" }}
           />
           <div>
@@ -761,16 +755,24 @@ function Outlet() {
       name: "Weekdays Menara Bidakara",
       tag: "Jakarta Selatan",
       addr: "Menara Bidakara, Lobby Utara LD, Jl. Jend. Gatot Subroto, Jakarta Selatan.",
-      hours: "Sen–Jum 06.00–20.00 · Sab 08.00–17.00 · Min tutup",
+      hours: ["Senin–Jumat 06.00–20.00", "Sabtu 08.00–17.00", "Minggu tutup"],
     },
     {
       name: "Weekdays Husein Sastranegara",
       tag: "Bandung",
       addr: "Bandara Husein Sastranegara (Departure Gate), Bandung, Jawa Barat.",
-      hours: "Setiap hari, mengikuti jam operasional bandara",
+      hours: ["Buka setiap hari", "Mengikuti jam operasional bandara"],
     },
   ];
-  const gallery = [IMG.interior1, IMG.interior2, IMG.interior3, IMG.interior4, IMG.interior5, IMG.interior6];
+  const gallery = [
+    IMG.outletCoworking,
+    IMG.outletWorkday,
+    IMG.outletSteakPatio,
+    IMG.outletNasiGoreng,
+    IMG.outletMatchaTools,
+    IMG.outletMatchaWhisk,
+    IMG.outletTableShare,
+  ];
   return (
     <>
       <section style={{ maxWidth: 1180, margin: "0 auto", padding: "56px 24px 30px", textAlign: "center" }}>
@@ -824,8 +826,16 @@ function Outlet() {
               <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 14.5, lineHeight: 1.6, color: C.muted, margin: "0 0 12px" }}>
                 {o.addr}
               </p>
-              <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: C.espresso, fontWeight: 500 }}>
-                🕗 {o.hours}
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 9 }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: 2, color: C.roast }}>
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
+                  <path d="M12 7.5V12l3 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, lineHeight: 1.7, color: C.espresso, fontWeight: 500 }}>
+                  {o.hours.map((h) => (
+                    <div key={h}>{h}</div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
@@ -860,22 +870,22 @@ function Outlet() {
 /* ============================== EVENT ==================================== */
 function Event() {
   const packages = [
-    { name: "Full Package", price: "200", unit: "cups", note: "Layanan lengkap dengan branding staff & properti untuk perayaan kantor." },
+    { name: "Full Package", price: "80", unit: "cups", note: "Layanan lengkap dengan branding staff & properti untuk perayaan kantor." },
     { name: "Weekdays-IN Bucket", price: "50", unit: "cups", note: "Bucket praktis melengkapi setiap kebersamaan teman kantor." },
-    { name: "Compact Package", price: "72", unit: "cups", note: "Paket ringkas, pas untuk gathering kecil dan after office." },
+    { name: "Compact Package", price: "30", unit: "cups", note: "Paket ringkas, pas untuk gathering kecil dan after office." },
   ];
   const menu = [
-    { img: IMG.coffeeCup, name: "Cup (8oz)", note: "Kopi Susu" },
-    { img: IMG.pour, name: "Kopi Susu (14oz)", note: "Light – Strong" },
-    { img: IMG.matcha, name: "Matcha Series (14oz)", note: "Green & creamy" },
-    { img: IMG.penne, name: "Bites & Meals", note: "Good food, good company" },
+    { img: IMG.menuKopiSusu, name: "Cup (8oz)", note: "Kopi Susu" },
+    { img: IMG.outletWorkday, name: "Kopi Susu (14oz)", note: "Light ke strong" },
+    { img: IMG.menuMatcha, name: "Matcha Series (14oz)", note: "Green & creamy" },
+    { img: IMG.eventBites, name: "Bites & Meals", note: "Good food, good company" },
   ];
   return (
     <>
       {/* HERO */}
       <section style={{ position: "relative" }}>
         <Img
-          src={IMG.event}
+          src={IMG.eventHero}
           alt="Weekdays event"
           style={{ width: "100%", height: 460, display: "block" }}
         />
@@ -924,6 +934,9 @@ function Event() {
         <div style={{ textAlign: "center", marginBottom: 44 }}>
           <Eyebrow>Our Package</Eyebrow>
           <h2 style={{ ...h2Style, textAlign: "center", margin: 0 }}>Pilih paketmu</h2>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 14.5, color: C.muted, marginTop: 12 }}>
+            Setiap event dapat menampung hingga 80 cups.
+          </p>
         </div>
         <div className="wd-three" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}>
           {packages.map((p) => (
@@ -946,7 +959,7 @@ function Event() {
                   {p.price}
                 </span>
                 <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, color: C.muted }}>
-                  {p.unit} · start from
+                  {p.unit}, hingga
                 </span>
               </div>
               <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, lineHeight: 1.55, color: C.muted, margin: 0 }}>
@@ -1000,29 +1013,42 @@ function Event() {
               kantormu. After office, gathering, atau perayaan tim, Weekdays siap
               menemani.
             </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 22 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 22 }}>
               <a
                 href="https://www.instagram.com/weekdayscoffee.id/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={eventContactLink}
               >
-                Instagram · @weekdayscoffee.id
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="currentColor" strokeWidth="1.6" />
+                  <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.6" />
+                  <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" />
+                </svg>
+                @weekdayscoffee.id
               </a>
               <a href="mailto:marketing@weekdayscoffee.id" style={eventContactLink}>
-                Email · marketing@weekdayscoffee.id
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
+                  <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                marketing@weekdayscoffee.id
               </a>
               <a
                 href="https://weekdayscoffee.id"
                 onClick={(e) => e.preventDefault()}
                 style={eventContactLink}
               >
-                Website · weekdayscoffee.id
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
+                  <path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+                </svg>
+                weekdayscoffee.id
               </a>
             </div>
           </div>
           <Img
-            src={IMG.pour}
+            src={IMG.eventContact}
             alt="Weekdays event catering"
             style={{ width: "100%", height: 320, borderRadius: 18, display: "block" }}
           />
@@ -1106,23 +1132,50 @@ function Footer({ setPage }) {
 
         <div>
           <div style={footHead}>Hubungi Kami</div>
-          <div style={{ marginBottom: 14 }}>
-            <div style={footLabel}>Lokasi</div>
-            <p style={footText}>Menara Bidakara, Jakarta Selatan</p>
-            <p style={footText}>Husein Sastranegara, Bandung</p>
+          <div style={footContactRow}>
+            <span style={footIcon} aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21c4.5-4 7-7.3 7-11a7 7 0 10-14 0c0 3.7 2.5 7 7 11z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+                <circle cx="12" cy="10" r="2.4" stroke="currentColor" strokeWidth="1.6" />
+              </svg>
+            </span>
+            <div>
+              <p style={footText}>Menara Bidakara, Jakarta Selatan</p>
+              <p style={footText}>Husein Sastranegara, Bandung</p>
+            </div>
           </div>
-          <div style={{ marginBottom: 14 }}>
-            <div style={footLabel}>Email</div>
+          <div style={footContactRow}>
+            <span style={footIcon} aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
             <p style={footText}>marketing@weekdayscoffee.id</p>
           </div>
-          <div style={{ marginBottom: 14 }}>
-            <div style={footLabel}>Website</div>
+          <div style={footContactRow}>
+            <span style={footIcon} aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+              </svg>
+            </span>
             <p style={footText}>weekdayscoffee.id</p>
           </div>
-          <div style={footLabel}>Sertifikasi Halal</div>
-          <p style={{ ...footText, fontWeight: 600, color: "rgba(255,255,255,0.9)" }}>
-            ID61110024716600725
-          </p>
+          <div style={footContactRow}>
+            <span style={footIcon} aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3l7 2.5v5c0 4.6-3 8.2-7 9.5-4-1.3-7-4.9-7-9.5v-5L12 3z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+                <path d="M9 11.8l2 2 4-4.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+            <div>
+              <p style={{ ...footText, margin: 0 }}>Sertifikasi Halal</p>
+              <p style={{ ...footText, fontWeight: 600, color: "rgba(255,255,255,0.9)", margin: 0 }}>
+                ID61110024716600725
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -1193,15 +1246,15 @@ const btnGhost = {
   cursor: "pointer",
 };
 const eventContactLink = {
-  display: "inline-block",
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 10,
   width: "fit-content",
   fontFamily: "'Inter', sans-serif",
   fontSize: 14.5,
   fontWeight: 500,
   color: C.espresso,
   textDecoration: "none",
-  borderBottom: `1.5px solid ${C.foam}`,
-  paddingBottom: 3,
 };
 const footHead = {
   fontFamily: "'Inter', sans-serif",
@@ -1221,14 +1274,16 @@ const footLink = {
   fontSize: 14,
   color: "rgba(255,255,255,0.72)",
 };
-const footLabel = {
-  fontFamily: "'Inter', sans-serif",
-  fontSize: 11,
-  fontWeight: 600,
-  letterSpacing: "0.08em",
-  textTransform: "uppercase",
-  color: "rgba(255,255,255,0.5)",
-  marginBottom: 5,
+const footContactRow = {
+  display: "flex",
+  alignItems: "flex-start",
+  gap: 11,
+  marginBottom: 16,
+};
+const footIcon = {
+  flexShrink: 0,
+  color: C.roast,
+  marginTop: 1,
 };
 const footText = {
   fontFamily: "'Inter', sans-serif",
